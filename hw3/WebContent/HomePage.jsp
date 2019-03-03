@@ -4,13 +4,6 @@
 <html>
 <head>
 	<script>
-	function DisplayAll()
-	{
-		var xhttp = new XMLHttpRequest();
-		xhttp.open("GET","Display.jsp?search=all",false);
-		xhttp.send();
-		
-	}
    	 	function show(index1,index2)
    	 	{
    	 		document.getElementById(index1).style.display = "";
@@ -98,14 +91,14 @@
 		<div id ="1" style="display:none">
 			<input style="width:15%;opacity:0.8;border:1px solid white;font-size:25px;" type="text" name="lat" value="Latitude">
 			<input style="width:15%;opacity:0.8;border:1px solid white;font-size:25px;" type="text" name="long" value="Longitude">
-			<input type="image" src="magnifying_glass.jpeg" width="25px" height="25px" style="position:relative;right:2.5%;">  
+			<input type="image" src="magnifying_glass.jpeg" width="25px" height="25px" style="position:relative;right:2.5%;">
+			<img src="MapIcon.png" width="25px" height="25px" style="position:relative;right:1%;">  
 		</div>
 		
 		<input type="radio" name="search" value="name" onclick="show(0,1);" checked><font style="font-size: 20px;">City</font>
   		<input type="radio" name="search" value="location" onclick="show(1,0);"><font style="font-size: 20px;">Location(Lat./Long.)</font><br><br>
-  		
+
 	</form>
-	<button style="border-radius:8px 8px;width:13%;opacity:0.8;border:1px solid white;"><a href="Display.jsp?search=all"><font style="font-weight:bold;font-size:25px;">Display All</font></a></button>
 
 	
 </div>
