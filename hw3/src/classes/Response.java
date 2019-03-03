@@ -1,6 +1,6 @@
 package classes;
 
-import java.util.List;
+import java.util.ArrayList;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,7 +11,7 @@ public class Response
 	public Coord coord;
 	@SerializedName("weather")
 	@Expose
-	public List<Weather> weather = null;
+	public ArrayList<Weather> weather = null;
 	@SerializedName("base")
 	@Expose
 	public String base;
