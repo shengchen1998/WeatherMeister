@@ -77,6 +77,7 @@
       }
       function project(latLng) {
         var siny = Math.sin(latLng.lat() * Math.PI / 180);
+
         siny = Math.min(Math.max(siny, -0.9999), 0.9999);
 
         return new google.maps.Point(
