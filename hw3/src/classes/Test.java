@@ -34,7 +34,17 @@ public class Test
 		{
 			
 		}
-		
+		Gson gson = new Gson();
+    	City c = gson.fromJson("{\r\n" + 
+    			"    \"id\": 707860,\r\n" + 
+    			"    \"name\": \"Hurzuf\",\r\n" + 
+    			"    \"country\": \"UA\",\r\n" + 
+    			"    \"coord\": {\r\n" + 
+    			"      \"lon\": 34.283333,\r\n" + 
+    			"      \"lat\": 44.549999\r\n" + 
+    			"    }\r\n" + 
+    			"  }",City.class);
+    	System.out.println(c.country);
 		
     }
 }	
