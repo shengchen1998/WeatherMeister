@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="java.util.ArrayList,classes.City"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +7,13 @@
     <meta charset="utf-8">
     
 	<script>
+	function Read()
+	{
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("GET","Reader",true);
+		xhttp.send();
+		
+	}
    	 	function show(index1,index2)
    	 	{
    	 		document.getElementById(index1).style.display = "";
@@ -138,7 +145,11 @@
 <title>Home Page</title>
 </head>
 <body>
-
+<script>
+	Read();
+</script>
+<%-- <%ArrayList<City> c = (ArrayList<City>) session.getAttribute("cityList");%>
+<h1><%=c.get(0).name %></h1> --%>
 <div id="father">
 <div id="shadow" style="display:none" ></div>
 <div id="bar">

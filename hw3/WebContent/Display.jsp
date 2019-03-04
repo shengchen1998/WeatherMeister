@@ -1,28 +1,53 @@
 <%@page import="java.io.Console"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.util.ArrayList" import="classes.Weather" import="java.lang.Integer"%>
+    pageEncoding="ISO-8859-1" import="java.util.ArrayList" import="classes.Response" 
+    import="classes.City" import="java.lang.Integer"
+    import="java.io.BufferedReader,java.io.FileNotFoundException,java.io.FileReader"
+    import="java.io.IOException,java.io.InputStream,java.io.InputStreamReader"
+    import="java.io.UnsupportedEncodingException,java.net.HttpURLConnection,java.net.URL"
+    import="com.google.gson.Gson,com.google.gson.GsonBuilder,com.google.gson.stream.JsonReader"
+%>
 <!DOCTYPE html>
 <%
 	String searchWay = request.getParameter("search");
 String order = request.getParameter("order");
-ArrayList<WeatherInfo> w = (ArrayList<WeatherInfo>)session.getAttribute("cities");
-ArrayList<WeatherInfo> result = new ArrayList<WeatherInfo>();
-if(searchWay.equals("all"))
-{
-	for(int i = 0;i<w.size();++i)
-	{
-	result.add(w.get(i));
-	}
-}
-else if(searchWay.equals("name"))
+ArrayList<City> c = (ArrayList<City>)session.getAttribute("cityList");
+ArrayList<Response> result = new ArrayList<Response>();
+if(searchWay.equals("name"))
 {
 	String cityName = request.getParameter("cityname").trim();
 	
-	for(int i = 0;i<w.size();++i)
+	for(int i = 0;i<c.size();++i)
 	{
-		if(w.get(i).getCity().toLowerCase().equals(cityName.toLowerCase()))
+		if(c.get(i).name.toLowerCase().equals(cityName.toLowerCase()))
 		{
-	result.add(w.get(i));
+			System.out.println(c.get(i).id+c.get(i).name);
+			try
+			{
+				int id = c.get(i).id;
+				System.out.println(c.get(i).id+"getid");
+				URL url = new URL("http://api.openweathermap.org/data/2.5/weather?id="+id+"&APPID=cbe1e2646d0c5436c0e8a24f808617a7");
+				System.out.println("geturl");
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				System.out.println("getconnection");
+				connection.setRequestMethod("GET");
+				connection.connect();
+				InputStream inputStream = connection.getInputStream();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream ));
+				StringBuffer sb = new StringBuffer();
+				String line = null;
+			    while ((line = reader.readLine()) != null) {
+			        sb.append(line + "\n");
+			    }
+	
+			    String r = sb.toString();
+			    Gson gson = new Gson();
+		    	Response res = gson.fromJson(r,Response.class);
+		    	result.add(res);
+			}catch(Exception e)
+			{
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 }
@@ -31,17 +56,48 @@ else
 	try
 	{
 		double lat = Double.parseDouble(request.getParameter("lat"));
-		double longitude = Double.parseDouble(request.getParameter("long"));
-		for(int i = 0;i<w.size();++i)
+		double lng = Double.parseDouble(request.getParameter("lng"));
+		double t = lat*100;
+		lat = ((int)t)/100.00;
+		t = lng*100;
+		lng = ((int)t)/100.00;
+		for(int i = 0;i<c.size();++i)
 		{
-	if(w.get(i).getLatitude() == lat)
-	{
-		if(w.get(i).getLongitude() == longitude)
-		{
-			result.add(w.get(i));
-		}
+			double latitude = c.get(i).coord.lat;
+			t = latitude*100;
+			latitude = ((int)t)/100.00;
+			if( latitude == lat)
+			{
+				double longitude = c.get(i).coord.lon;
+				t = longitude*100;
+				longitude = ((int)t)/100.00;
+				if(longitude == lng)
+				{
+					try
+					{
+						int id = c.get(i).id;
+						URL url = new URL("http://api.openweathermap.org/data/2.5/weather?id="+id+"&APPID=cbe1e2646d0c5436c0e8a24f808617a7");
+						HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+						connection.setRequestMethod("GET");
+						connection.connect();
+						InputStream inputStream = connection.getInputStream();
+						BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream ));
+						StringBuffer sb = new StringBuffer();
+						String line = null;
+					    while ((line = reader.readLine()) != null) {
+					        sb.append(line + "\n");
+					    }
+			
+					    String r = sb.toString();
+					    Gson gson = new Gson();
+				    	Response res = gson.fromJson(r,Response.class);
+				    	result.add(res);
+					}catch(Exception e)
+					{				
+					}
+				}
 		
-	}
+			}
 		}
 	}
 	catch (Exception e)
@@ -58,12 +114,12 @@ if(order!=null&&order.trim().length()!=0)
 	int min = i;
 	for(int j = i+1;j < result.size();++j)
 	{
-		if(result.get(j).getCity().compareTo(result.get(min).getCity())<0)
+		if(result.get(j).name.compareTo(result.get(min).name)<0)
 		{
 			min = j;
 		}
 	}
-	WeatherInfo temp = result.get(i);
+	Response temp = result.get(i);
 	result.set(i,result.get(min));
 	result.set(min,temp);
 		}
@@ -75,12 +131,12 @@ if(order!=null&&order.trim().length()!=0)
 	int max = i;
 	for(int j = i+1;j < result.size();++j)
 	{
-		if(result.get(j).getCity().compareTo(result.get(max).getCity())>0)
+		if(result.get(j).name.compareTo(result.get(max).name)>0)
 		{
 			max = j;
 		}
 	}
-	WeatherInfo temp = result.get(i);
+	Response temp = result.get(i);
 	result.set(i,result.get(max));
 	result.set(max,temp);
 		}
@@ -92,12 +148,12 @@ if(order!=null&&order.trim().length()!=0)
 	int min = i;
 	for(int j = i+1;j < result.size();++j)
 	{
-		if(result.get(j).getDayLow()<result.get(min).getDayLow())
+		if(result.get(j).main.tempMin<result.get(min).main.tempMin)
 		{
 			min = j;
 		}
 	}
-	WeatherInfo temp = result.get(i);
+	Response temp = result.get(i);
 	result.set(i,result.get(min));
 	result.set(min,temp);
 		}
@@ -109,12 +165,12 @@ if(order!=null&&order.trim().length()!=0)
 	int max = i;
 	for(int j = i+1;j < result.size();++j)
 	{
-		if(result.get(j).getDayLow()>result.get(max).getDayLow())
+		if(result.get(j).main.tempMin>result.get(max).main.tempMin)
 		{
 			max = j;
 		}
 	}
-	WeatherInfo temp = result.get(i);
+	Response temp = result.get(i);
 	result.set(i,result.get(max));
 	result.set(max,temp);
 		}
@@ -126,12 +182,12 @@ if(order!=null&&order.trim().length()!=0)
 	int min = i;
 	for(int j = i+1;j < result.size();++j)
 	{
-		if(result.get(j).getDayHigh()<result.get(min).getDayHigh())
+		if(result.get(j).main.tempMax<result.get(min).main.tempMax)
 		{
 			min = j;
 		}
 	}
-	WeatherInfo temp = result.get(i);
+	Response temp = result.get(i);
 	result.set(i,result.get(min));
 	result.set(min,temp);
 		}
@@ -143,12 +199,12 @@ if(order!=null&&order.trim().length()!=0)
 	int max = i;
 	for(int j = i+1;j < result.size();++j)
 	{
-		if(result.get(j).getDayHigh()>result.get(max).getDayHigh())
+		if(result.get(j).main.tempMax>result.get(max).main.tempMax)
 		{
 			max = j;
 		}
 	}
-	WeatherInfo temp = result.get(i);
+	Response temp = result.get(i);
 	result.set(i,result.get(max));
 	result.set(max,temp);
 		}
@@ -293,7 +349,7 @@ session.setAttribute("result", result);
 	</head>
 	<body onload="options();">
 	<%
-		ArrayList<WeatherInfo> r = (ArrayList<WeatherInfo>)session.getAttribute("result");
+		ArrayList<Response> r = (ArrayList<Response>)session.getAttribute("result");
 	%>
 		<div id="bar">
 			<p> <a href="HomePage.jsp"> WeatherMeister </a> </p>
@@ -306,7 +362,7 @@ session.setAttribute("result", result);
 				</div>
 				<div id ="1" style="display:none">
 					<input style="width:25%" type="text" name="lat" value="Latitude">
-					<input style="width:25%" type="text" name="long" value="Longitude">
+					<input style="width:25%" type="text" name="lng" value="Longitude">
 					<input type="image" src="magnifying_glass.jpeg" width="25px" height="25px" style="position:relative;right:5%;">  
 				</div>
 				<div id="radiobuttons">
@@ -316,9 +372,7 @@ session.setAttribute("result", result);
 			</form>
 		</div>
 		<%if(r.size()>0){ %>
-			<%if(searchWay.equals("all")){ %>
 		<font style="color:white;position:fixed;top:20%;font-size:50px;">All Cities</font>
-			<%}%>
 			<%if(r.size()>1){ %>
 		<div id="sort">
 			<font style="color:white;position:fixed;top:20%;font-size:40px;">Sort by:</font>
@@ -360,9 +414,9 @@ session.setAttribute("result", result);
   					{%>
   						<tr style="font-size: 30px;">
   							<%String url = "Detail.jsp?index="+i;%>
-    						<td><a href=<%=url%>><%=r.get(i).getCity()%></a></td>
-    						<td><%=r.get(i).getDayLow()%></td> 
-    						<td><%=r.get(i).getDayHigh()%></td>
+    						<td><a href=<%=url%>><%=r.get(i).name%></a></td>
+    						<td><%=r.get(i).main.tempMin%></td> 
+    						<td><%=r.get(i).main.tempMax%></td>
   						</tr>
   					<%}
   					else

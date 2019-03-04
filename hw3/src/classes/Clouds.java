@@ -7,5 +7,5 @@ public class Clouds
 {
 	@SerializedName("all")
 	@Expose
-	public int all;
+	public double all;
 }
