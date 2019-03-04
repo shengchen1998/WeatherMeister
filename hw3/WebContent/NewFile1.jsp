@@ -81,8 +81,8 @@
         siny = Math.min(Math.max(siny, -0.9999), 0.9999);
 
         return new google.maps.Point(
-            TILE_SIZE * (0.5 + latLng.lng() / 360),
-            TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
+                TILE_SIZE * (0.5 + latLng.lng() / 360),
+                TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
       }
     </script>
     <script async defer
