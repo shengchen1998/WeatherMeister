@@ -21,15 +21,11 @@ if(searchWay.equals("name"))
 	{
 		if(c.get(i).name.toLowerCase().equals(cityName.toLowerCase()))
 		{
-			System.out.println(c.get(i).id+c.get(i).name);
 			try
 			{
 				int id = c.get(i).id;
-				System.out.println(c.get(i).id+"getid");
 				URL url = new URL("http://api.openweathermap.org/data/2.5/weather?id="+id+"&APPID=cbe1e2646d0c5436c0e8a24f808617a7");
-				System.out.println("geturl");
 				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-				System.out.println("getconnection");
 				connection.setRequestMethod("GET");
 				connection.connect();
 				InputStream inputStream = connection.getInputStream();
@@ -55,20 +51,26 @@ else
 {
 	try
 	{
-		double lat = Double.parseDouble(request.getParameter("lat"));
-		double lng = Double.parseDouble(request.getParameter("lng"));
+		double lat = Double.parseDouble(request.getParameter("lat"))+0.005;
+		System.out.println("lat"+lat);
+		double lng = Double.parseDouble(request.getParameter("lng"))+0.005;
+		System.out.println("lng"+lng);
 		double t = lat*100;
 		lat = ((int)t)/100.00;
+		System.out.println("lat"+lat);
 		t = lng*100;
 		lng = ((int)t)/100.00;
+		System.out.println("lng"+lng);
+		System.out.println("lat"+c.get(0).coord.lat);
+		System.out.println("lng"+c.get(0).coord.lon);
 		for(int i = 0;i<c.size();++i)
 		{
-			double latitude = c.get(i).coord.lat;
+			double latitude = c.get(i).coord.lat+0.005;
 			t = latitude*100;
 			latitude = ((int)t)/100.00;
 			if( latitude == lat)
 			{
-				double longitude = c.get(i).coord.lon;
+				double longitude = c.get(i).coord.lon+0.005;
 				t = longitude*100;
 				longitude = ((int)t)/100.00;
 				if(longitude == lng)
@@ -93,7 +95,8 @@ else
 				    	Response res = gson.fromJson(r,Response.class);
 				    	result.add(res);
 					}catch(Exception e)
-					{				
+					{
+						System.out.println(e.getMessage());
 					}
 				}
 		
@@ -102,6 +105,7 @@ else
 	}
 	catch (Exception e)
 	{
+		System.out.println(e.getMessage());
 	}
 }
 if(order!=null&&order.trim().length()!=0)

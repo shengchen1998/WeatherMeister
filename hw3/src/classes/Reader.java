@@ -41,7 +41,6 @@ public class Reader extends HttpServlet
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String path = getServletContext().getRealPath("city.list.json");
-		System.out.println(path);
 		FileReader reader = null;
 		try
 		{
@@ -51,7 +50,6 @@ public class Reader extends HttpServlet
 		}
 		JsonReader jsonReader = new JsonReader(reader);
 		ArrayList<City> cityList = new ArrayList<City>();
-		System.out.println(path);
 		try
 		{
 			Gson gson = new GsonBuilder().create();
