@@ -190,8 +190,8 @@ function initMap() {
         coordInfoWindow.open(map);
         document.getElementById("map").style.display = "none";
 	 		document.getElementById("shadow").style.display = "none";
-        document.myform.lat.value = event.latLng.lat();
-        document.myform.lng.value = event.latLng.lng();
+        document.myform.lat.value = event.latLng.lat().toFixed(2);
+        document.myform.lng.value = event.latLng.lng().toFixed(2);
       });
   }
 		var TILE_SIZE = 256;
