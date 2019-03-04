@@ -150,14 +150,14 @@
 <div id="map" style="display:none"></div>
 <div id="g" style="display:none"><input type="image" onclick="showmap()" src="MapIcon_.png" style="position:absolute;z-index:2" ></div>
 <div id="searchway">
-	<form action="Display.jsp" method="GET">
+	<form name="myform" action="Display.jsp" method="GET">
 		<div id ="0">
 			<input style="width:30%;opacity:0.8;border:1px solid white;font-size:25px;" type="text" name="cityname" value="Los Angeles">
 			<input type="image" src="magnifying_glass.jpeg" width="25px" height="25px" style="position:relative;right:2.5%;"> 
 		</div>
 		<div id ="1" style="display:none">
 			<input style="width:15%;opacity:0.8;border:1px solid white;font-size:25px;" type="text" name="lat" value="Latitude">
-			<input style="width:15%;opacity:0.8;border:1px solid white;font-size:25px;" type="text" name="long" value="Longitude">
+			<input style="width:15%;opacity:0.8;border:1px solid white;font-size:25px;" type="text" name="lng" value="Longitude">
 			<input type="image" src="magnifying_glass.jpeg" width="25px" height="25px" style="position:relative;right:2.5%;">
 			
 		</div>
@@ -188,6 +188,10 @@ function initMap() {
         coordInfoWindow.setContent(createInfoWindowContent(marker.getPosition(), map.getZoom()));
         coordInfoWindow.setPosition(marker.getPosition());
         coordInfoWindow.open(map);
+        document.getElementById("map").style.display = "none";
+	 		document.getElementById("shadow").style.display = "none";
+        document.myform.lat.value = event.latLng.lat();
+        document.myform.lng.value = event.latLng.lng();
       });
   }
 		var TILE_SIZE = 256;
