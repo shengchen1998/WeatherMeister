@@ -265,6 +265,11 @@ session.setAttribute("result", result);
 				font-family: Savoye;
 				src: url('17357674296594851838.woff');
 			}
+			#father{
+		position:absolute;
+		width:100%;
+		height:100%;
+		}
 			body
 			{
 				background-image: url("background_filter.jpg");
@@ -355,6 +360,7 @@ session.setAttribute("result", result);
 	<%
 		ArrayList<Response> r = (ArrayList<Response>)session.getAttribute("result");
 	%>
+	<div id="father">
 		<div id="bar">
 			<p> <a href="HomePage.jsp"> WeatherMeister </a> </p>
 		</div>
@@ -438,5 +444,6 @@ session.setAttribute("result", result);
 		<%}else{%>
 			 <h1 align="center" style="color:white;position:relative;top:500px;">No city matches the search.</h1> 
 		<%} %>
+		</div>
 	</body>
 </html>
