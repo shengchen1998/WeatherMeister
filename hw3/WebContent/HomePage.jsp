@@ -196,9 +196,6 @@ function initMap() {
     
     google.maps.event.addListener(map, 'click', function(event) {
         var marker = addMarker(event.latLng, map);
-        /* coordInfoWindow.setContent(createInfoWindowContent(marker.getPosition(), map.getZoom()));
-        coordInfoWindow.setPosition(marker.getPosition());
-        coordInfoWindow.open(map); */
         document.getElementById("map").style.display = "none";
 	 	document.getElementById("shadow").style.display = "none";
         document.myform.lat.value = event.latLng.lat().toFixed(2);
