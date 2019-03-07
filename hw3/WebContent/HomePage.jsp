@@ -158,8 +158,13 @@
 <div id="shadow" style="display:none" ></div>
 <div id="bar">
 	<div id="wm"><p> <a href="HomePage.jsp"> WeatherMeister </a> </p></div>
+	<%if(request.getParameter("username")==null||request.getParameter("username").trim().length()==0){ %>
 	<div id="l"><a href="Login.jsp" style="position:absolute;top:25%;right:15%;">Login</a></div>
 	<div id="r"><a href="Register.jsp" style="position:absolute;top:25%;right:5%;">Register</a></div>
+	<%}else{ %>
+	<div id="l"><a href="Login.jsp" style="position:absolute;top:25%;right:15%;">Profile</a></div>
+	<div id="r"><a href="Register.jsp" style="position:absolute;top:25%;right:5%;">Sign Out</a></div>
+	<%} %>
 </div>
 <div id= "logo" style="top:20%;width:100%;height:40%;text-align:center;">
 	<img src="logo.png" style="width:30%;height:100%;">
