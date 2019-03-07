@@ -24,9 +24,10 @@ if(searchWay.equals("name"))
 	cityName = cityName.trim();
 	if(cityName.length()!=0)
 	{
-		String username = (String)session.getAttribute("currentUser");
-		if((String)session.getAttribute("currentUser")==null||((String)session.getAttribute("currentUser")).trim().length()==0)
+		
+		if((String)session.getAttribute("currentUser")!=null&&((String)session.getAttribute("currentUser")).trim().length()!=0)
 		{
+			String un = (String)session.getAttribute("currentUser");
 			Connection conn = null;
 			PreparedStatement ps = null;
 			ResultSet rs = null;
@@ -34,8 +35,37 @@ if(searchWay.equals("name"))
 			{
 				Class.forName("com.mysql.jdbc.Driver");
 				conn = DriverManager.getConnection("jdbc:mysql://localhost/userData?user=root&password=root&useSSL=false");
-				String username = (String)session.getAttribute("currentUser");
-				ps = conn.prepareStatement("INSERT INTO users (username, pw) VALUES (?, ?)");
+				ps = conn.prepareStatement("INSERT INTO histories (username, input) VALUES (?, ?)");
+				ps.setString(1, un);
+				ps.setString(2, cityName);
+				ps.executeUpdate();
+			} catch (SQLException sqle)
+			{
+				System.out.println(sqle.getMessage());
+			} catch (ClassNotFoundException cnfe)
+			{
+				System.out.println(cnfe.getMessage());
+			} finally
+			{
+				
+				try
+				{
+					if (rs != null)
+					{
+						rs.close();
+					}
+					if (ps != null)
+					{
+						ps.close();
+					}
+					if (conn != null)
+					{
+						conn.close();
+					}
+				} catch (SQLException sqle)
+				{
+					System.out.println(sqle.getMessage());
+				}
 			}
 		}
 		
