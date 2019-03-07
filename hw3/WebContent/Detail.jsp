@@ -10,7 +10,13 @@ Response res = r.get(index);
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title><%=res.name%></title>
+		<title>
+		<%if(res.name==null||res.name.trim().length()==0){%>
+			Undefined
+		<%}else{ %>
+		<%= res.name+","+res.sys.country %>
+		<%} %>
+		</title>
 		<script>
 		function showmap()
    	 	{
@@ -156,13 +162,24 @@ Response res = r.get(index);
 			</form>
 		</div>
 		<div style="position:fixed;height:10%;">
-			<font style="color:white;position:fixed;top:10%;font-size:50px;"><%=res.name%></font>
+			<font style="color:white;position:fixed;top:10%;font-size:50px;"><%if(res.name==null||res.name.trim().length()==0){%>
+			Undefined
+		<%}else{ %>
+		<%= res.name+","+res.sys.country %>
+		<%} %></font>
 		</div>
 		<div id="buttons" style="position:fixed;top:20%;width:100%;height:80%;">
 			<div id="location" style="text-align:center;width:25%;height:50%;float:left;">
 				<input id="2" onclick="show(3,2);" type="image" src="planet-earth.png" style="height:80%;">
 				<button id="3" onclick="show(2,3);" type="button" style="border:0px;background: transparent;display:none;height:80%;">
-				<font style="color:white;font-size:30px;"><%=res.sys.country%></font>
+				<font style="color:white;font-size:30px;">
+					<%if(res.sys.country==null||res.sys.country.trim().length()==0){%>
+						Undefined
+					<%}else{ %>
+					<%=res.sys.country %>
+					<%} %>
+
+				</font>
 				</button><br>
 				<font style="color:white;font-size:40px;">Location</font>
 			</div>

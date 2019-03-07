@@ -107,9 +107,7 @@ else
 	try
 	{
 		double lat = Double.parseDouble(request.getParameter("lat"))+0.005;
-		System.out.println("lat"+lat);
 		double lng = Double.parseDouble(request.getParameter("lng"))+0.005;
-		System.out.println("lng"+lng);
 		double t = lat*100;
 		lat = ((int)t)/100.00;
 		t = lng*100;
@@ -547,7 +545,11 @@ session.setAttribute("result", result);
   					{%>
   						<tr style="font-size: 30px;">
   							<%String url = "Detail.jsp?index="+i;%>
-    						<td><a href=<%=url%>><%=r.get(i).name%>,<%=r.get(i).sys.country%></a></td>
+  							<%if(r.get(i).name==null||r.get(i).name.trim().length()==0){%> 
+  								<td><a href=<%=url%>>Undefined</a></td>
+  							<%}else{%>
+    						<td><a href=<%=url%>><%=r.get(i).name%><%if(r.get(i).sys.country!=null){%>,<%=r.get(i).sys.country%><%}%></a></td>
+    						<%} %>
     						<td><%=r.get(i).main.tempMin%></td> 
     						<td><%=r.get(i).main.tempMax%></td>
   						</tr>
