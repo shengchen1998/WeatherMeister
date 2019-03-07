@@ -527,8 +527,8 @@ session.setAttribute("result", result);
 				</colgroup>
   				<tr style="font-size: 40px;">
     				<th>City Name</th>
-    				<th>Temp.Low</th> 
-    				<th>Temp.High</th>
+    				<th>Temp.Low/K</th> 
+    				<th>Temp.High/K</th>
   				</tr>
   				</table>
   			</div>

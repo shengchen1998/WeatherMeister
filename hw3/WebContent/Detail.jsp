@@ -188,14 +188,14 @@ Response res = r.get(index);
 				<button id="5" onclick="show(4,5);" type="button" style="border:0px;background: transparent;display:none;height:80%;">
 				<font style="color:white;font-size:30px;"><%=res.main.tempMin%></font>
 				</button><br>
-				<font style="color:white;font-size:40px;">Temp Low</font>
+				<font style="color:white;font-size:40px;">Temp Low/K</font>
 			</div>
 			<div id="tempHigh" style="text-align:center;width:25%;height:50%;float:left;">
 				<input id="6" onclick="show(7,6);" type="image" src="sun.png" style="height:80%;">
 				<button id="7" onclick="show(6,7);" type="button" style="border:0px;background: transparent;display:none;height:80%;">
 				<font style="color:white;font-size:30px;"><%=res.main.tempMax%></font>
 				</button><br>
-				<font style="color:white;font-size:40px;">Temp High</font>
+				<font style="color:white;font-size:40px;">Temp High/K</font>
 			</div>
 			<div id="wind" style="text-align:center;width:25%;height:50%;float:left;">
 				<input id="8" onclick="show(9,8);" type="image" src="wind.png" style="height:80%;">
@@ -207,7 +207,7 @@ Response res = r.get(index);
 			<div id="humidity" style="text-align:center;width:25%;height:50%;float:left;">
 				<input id="10" onclick="show(11,10);" type="image" src="drop.png" style="height:80%;">
 				<button id="11" onclick="show(10,11);" type="button" style="border:0px;background: transparent;display:none;height:80%;">
-				<font style="color:white;font-size:30px;"><%=res.main.humidity%></font>
+				<font style="color:white;font-size:30px;"><%=res.main.humidity%>%</font>
 				</button><br>
 				<font style="color:white;font-size:40px;">Humidity</font>
 			</div>
@@ -223,7 +223,7 @@ Response res = r.get(index);
 				<button id="15" onclick="show(14,15);" type="button" style="border:0px;background: transparent;display:none;height:80%;">
 				<font style="color:white;font-size:30px;"><%=res.main.temp%></font>
 				</button><br>
-				<font style="color:white;font-size:40px;">Current Temp</font>
+				<font style="color:white;font-size:40px;">Current Temp/K</font>
 			</div>
 			<div id="sun" style="text-align:center;width:25%;height:50%;float:left;">
 				<input id="16" onclick="show(17,16);" type="image" src="sunrise-icon.png" style="height:80%;">
