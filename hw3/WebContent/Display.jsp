@@ -157,22 +157,11 @@ else
 				}
 			}
 		}
-		for(int i = 0;i<c.size();++i)
-		{
-			double latitude = c.get(i).coord.lat+0.005;
-			t = latitude*100;
-			latitude = ((int)t)/100.00;
-			if( latitude == lat)
-			{
-				double longitude = c.get(i).coord.lon+0.005;
-				t = longitude*100;
-				longitude = ((int)t)/100.00;
-				if(longitude == lng)
-				{
+		
 					try
 					{
-						int id = c.get(i).id;
-						URL url = new URL("http://api.openweathermap.org/data/2.5/weather?id="+id+"&APPID=cbe1e2646d0c5436c0e8a24f808617a7");
+						
+						URL url = new URL("http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lng+"&APPID=cbe1e2646d0c5436c0e8a24f808617a7");
 						HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 						connection.setRequestMethod("GET");
 						connection.connect();
@@ -192,10 +181,7 @@ else
 					{
 						System.out.println(e.getMessage());
 					}
-				}
 		
-			}
-		}
 	}
 	catch (Exception e)
 	{
@@ -212,7 +198,7 @@ if(order!=null&&order.trim().length()!=0)
 	int min = i;
 	for(int j = i+1;j < result.size();++j)
 	{
-		if(result.get(j).name.compareTo(result.get(min).name)<0)
+		if((result.get(j).name+result.get(j).sys.country).compareTo(result.get(min).name+result.get(min).sys.country)<0)
 		{
 			min = j;
 		}
@@ -229,7 +215,7 @@ if(order!=null&&order.trim().length()!=0)
 	int max = i;
 	for(int j = i+1;j < result.size();++j)
 	{
-		if(result.get(j).name.compareTo(result.get(max).name)>0)
+		if((result.get(j).name+result.get(j).sys.country).compareTo(result.get(max).name+result.get(max).sys.country)>0)
 		{
 			max = j;
 		}
@@ -561,7 +547,7 @@ session.setAttribute("result", result);
   					{%>
   						<tr style="font-size: 30px;">
   							<%String url = "Detail.jsp?index="+i;%>
-    						<td><a href=<%=url%>><%=r.get(i).name%></a></td>
+    						<td><a href=<%=url%>><%=r.get(i).name%>,<%=r.get(i).sys.country%></a></td>
     						<td><%=r.get(i).main.tempMin%></td> 
     						<td><%=r.get(i).main.tempMax%></td>
   						</tr>
