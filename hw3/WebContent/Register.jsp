@@ -67,18 +67,6 @@
         		text-decoration:none;
         	}
         
-        	input[type=text] 
-        	{
-  				/* background-color: 	rgb(115, 115, 115); */
-  				/* color: rgb(230, 230, 230); */
-  				/* padding: 5px 5px; */
-			}
-			button
-			{
-				background-color: 	rgb(115, 115, 115);
-  				color: rgb(230, 230, 230);
-  				padding: 10px 10px;
-			}
 			#window
 			{
 				position:absolute;

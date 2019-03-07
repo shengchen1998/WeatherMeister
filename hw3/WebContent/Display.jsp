@@ -112,12 +112,51 @@ else
 		System.out.println("lng"+lng);
 		double t = lat*100;
 		lat = ((int)t)/100.00;
-		System.out.println("lat"+lat);
 		t = lng*100;
 		lng = ((int)t)/100.00;
-		System.out.println("lng"+lng);
-		System.out.println("lat"+c.get(0).coord.lat);
-		System.out.println("lng"+c.get(0).coord.lon);
+		if((String)session.getAttribute("currentUser")!=null&&((String)session.getAttribute("currentUser")).trim().length()!=0)
+		{
+			String un = (String)session.getAttribute("currentUser");
+			Connection conn = null;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			try
+			{
+				Class.forName("com.mysql.jdbc.Driver");
+				conn = DriverManager.getConnection("jdbc:mysql://localhost/userData?user=root&password=root&useSSL=false");
+				ps = conn.prepareStatement("INSERT INTO histories (username, input) VALUES (?, ?)");
+				ps.setString(1, un);
+				ps.setString(2, "("+lat+","+lng+")");
+				ps.executeUpdate();
+			} catch (SQLException sqle)
+			{
+				System.out.println(sqle.getMessage());
+			} catch (ClassNotFoundException cnfe)
+			{
+				System.out.println(cnfe.getMessage());
+			} finally
+			{
+				
+				try
+				{
+					if (rs != null)
+					{
+						rs.close();
+					}
+					if (ps != null)
+					{
+						ps.close();
+					}
+					if (conn != null)
+					{
+						conn.close();
+					}
+				} catch (SQLException sqle)
+				{
+					System.out.println(sqle.getMessage());
+				}
+			}
+		}
 		for(int i = 0;i<c.size();++i)
 		{
 			double latitude = c.get(i).coord.lat+0.005;
