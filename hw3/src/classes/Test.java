@@ -9,6 +9,9 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
@@ -19,7 +22,7 @@ public class Test
 {
 	public static void main(String[] args)
 	{
-		try
+		/*try
 		{
 			URL url = new URL("http://api.openweathermap.org/data/2.5/weather?id=2172797&APPID=cbe1e2646d0c5436c0e8a24f808617a7");
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -89,7 +92,9 @@ public class Test
 		} catch (IOException ex)
 		{
 			
-		}
-		
+		}*/
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 	}
 }
