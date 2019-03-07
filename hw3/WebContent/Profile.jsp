@@ -132,7 +132,7 @@
 			}
 		}
 		%>
-		<div id="table" style="position:absolute;top:30%;color:white;width:60%;left:20%;right:20%;height:60%;">
+		<div id="table" style="position:absolute;top:30%;color:white;width:40%;left:30%;right:30%;height:60%;">
   				<div style=" overflow:auto;height:90%;">
   				<table style="width:100%">
   				<%for(int i = history.size()-1;i >= 0;--i)
