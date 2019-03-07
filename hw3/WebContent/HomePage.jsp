@@ -81,13 +81,17 @@
         	position:absolute;
         	background-color: rgba(0,0,0,0.7);
         	color: white;
-        	font-family: "Savoye";
+        	
         	font-size: 25px;
         	
         	top:0%;
         	z-index: 2;
         	width:100%;
         	height:10%;
+        }
+        #wm
+        {
+        	font-family: "Savoye";
         }
         #logo
         {
@@ -153,7 +157,9 @@
 <div id="father">
 <div id="shadow" style="display:none" ></div>
 <div id="bar">
-	<p> <a href="HomePage.jsp"> WeatherMeister </a> </p>
+	<div id="wm"><p> <a href="HomePage.jsp"> WeatherMeister </a> </p></div>
+	<div id="l"><a href="HomePage.jsp">Login</a></div>
+	<div id="r"><a href="HomePage.jsp">Register</a></div>
 </div>
 <div id= "logo" style="top:20%;width:100%;height:40%;text-align:center;">
 	<img src="logo.png" style="width:30%;height:100%;">

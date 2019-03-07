@@ -16,36 +16,40 @@ ArrayList<Response> result = new ArrayList<Response>();
 if(searchWay.equals("name"))
 {
 	String cityName = request.getParameter("cityname").trim();
-	
-	for(int i = 0;i<c.size();++i)
+	if(cityName.length()!=0)
 	{
-		if(c.get(i).name.toLowerCase().equals(cityName.toLowerCase()))
+		for(int i = 0;i<c.size();++i)
 		{
-			try
+			if(c.get(i).name.toLowerCase().equals(cityName.toLowerCase()))
 			{
-				int id = c.get(i).id;
-				URL url = new URL("http://api.openweathermap.org/data/2.5/weather?id="+id+"&APPID=cbe1e2646d0c5436c0e8a24f808617a7");
-				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-				connection.setRequestMethod("GET");
-				connection.connect();
-				InputStream inputStream = connection.getInputStream();
-				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream ));
-				StringBuffer sb = new StringBuffer();
-				String line = null;
-			    while ((line = reader.readLine()) != null) {
-			        sb.append(line + "\n");
-			    }
-	
-			    String r = sb.toString();
-			    Gson gson = new Gson();
-		    	Response res = gson.fromJson(r,Response.class);
-		    	result.add(res);
-			}catch(Exception e)
-			{
-				System.out.println(e.getMessage());
+				try
+				{
+					int id = c.get(i).id;
+					URL url = new URL("http://api.openweathermap.org/data/2.5/weather?id="+id+"&APPID=cbe1e2646d0c5436c0e8a24f808617a7");
+					HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+					connection.setRequestMethod("GET");
+					connection.connect();
+					InputStream inputStream = connection.getInputStream();
+					BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream ));
+					StringBuffer sb = new StringBuffer();
+					String line = null;
+				    while ((line = reader.readLine()) != null) {
+				        sb.append(line + "\n");
+				    }
+		
+				    String r = sb.toString();
+				    Gson gson = new Gson();
+			    	Response res = gson.fromJson(r,Response.class);
+			    	result.add(res);
+				}catch(Exception e)
+				{
+					System.out.println(e.getMessage());
+				}
 			}
 		}
 	}
+	
+	
 }
 else 
 {
@@ -220,10 +224,23 @@ session.setAttribute("result", result);
 <html>
 	<head>
 		<script>
+		function showmap()
+   	 	{
+   	 		document.getElementById("map").style.display = "";
+   	 		document.getElementById("shadow").style.display = "";
+   	 	}
 			function show(index1,index2)
 			{
 				document.getElementById(index1).style.display = "";
 		  		document.getElementById(index2).style.display = "none";
+		  		if(index1==1)
+	      	  	{
+	      	  		document.getElementById("g").style.display = "";
+	      	  	}
+	      	  	else
+	      	  	{
+	      	  	document.getElementById("g").style.display = "none";
+	      	  	}
 			}
 			function sorting()
 			{
@@ -260,16 +277,28 @@ session.setAttribute("result", result);
 			}
 		</script>
 		<style>
+			#map 
+			{
+				left:25%;
+				right:25%;
+				top:25%;
+				bottom:25%;
+				position:absolute;
+				margin-top:0%;
+				z-index: 3;
+				width:50%;
+        		height: 50%;
+      		} 
 			@font-face
 			{
 				font-family: Savoye;
 				src: url('17357674296594851838.woff');
 			}
 			#father{
-		position:absolute;
-		width:100%;
-		height:100%;
-		}
+				position:absolute;
+				width:100%;
+				height:100%;
+			}
 			body
 			{
 				background-image: url("background_filter.jpg");
@@ -296,7 +325,7 @@ session.setAttribute("result", result);
         		color:white;
         		right:0%;
         		text-align:left;
-        		z-index:100;
+        		z-index:2;
         	}
         	 #radiobuttons
 			{
@@ -348,10 +377,24 @@ session.setAttribute("result", result);
 			{
 				border: 0px;
 			}
-			#table
+
+			#shadow
 			{
-			}
-			
+				background-color: rgba(0,0,0,0.7);
+				position:absolute;
+				z-index: 2;
+				width:100%;
+       		 	height: 100%;
+			} 
+			#g
+        	{
+        		position:absolute;
+				width:30px;
+				height:30px;
+        		top:1%;
+        		right:22.5%;
+        		z-index:3;
+        	}	
 		</style>
 		<meta charset="ISO-8859-1">
 		<title>Display</title>
@@ -361,11 +404,14 @@ session.setAttribute("result", result);
 		ArrayList<Response> r = (ArrayList<Response>)session.getAttribute("result");
 	%>
 	<div id="father">
+		<div id="shadow" style="display:none" ></div>
 		<div id="bar">
 			<p> <a href="HomePage.jsp"> WeatherMeister </a> </p>
 		</div>
+		<div id="map" style="display:none"></div>
+		<div id="g" style="display:none"><input type="image" onclick="showmap()" src="MapIcon_.png" style="position:absolute;z-index:3" ></div>
 		<div id="searchway">
-			<form action="Display.jsp" method="GET">
+			<form name="myform" action="Display.jsp" method="GET">
 				<div id ="0">
 					<input style="width:50%" type="text" name="cityname" value="Los Angeles">
 					<input type="image" src="magnifying_glass.jpeg" width="25px" height="25px" style="position:relative;right:5%;"> 
@@ -373,7 +419,8 @@ session.setAttribute("result", result);
 				<div id ="1" style="display:none">
 					<input style="width:25%" type="text" name="lat" value="Latitude">
 					<input style="width:25%" type="text" name="lng" value="Longitude">
-					<input type="image" src="magnifying_glass.jpeg" width="25px" height="25px" style="position:relative;right:5%;">  
+					<input type="image" src="magnifying_glass.jpeg" width="25px" height="25px" style="position:relative;right:5%;">
+					  
 				</div>
 				<div id="radiobuttons">
 					<input type="radio" name="search" value="name" onclick="show(0,1);" checked><font style="font-size: 20px;">City</font>
@@ -445,5 +492,70 @@ session.setAttribute("result", result);
 			 <h1 align="center" style="color:white;position:relative;top:500px;">No city matches the search.</h1> 
 		<%} %>
 		</div>
+		<script>
+function initMap() {
+    var chicago = new google.maps.LatLng(41.850, -87.650);
+ 
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: chicago,
+      zoom: 3
+    });
+    
+    var coordInfoWindow = new google.maps.InfoWindow();
+    coordInfoWindow.setContent(createInfoWindowContent(chicago, map.getZoom()));
+    coordInfoWindow.setPosition(chicago);
+    coordInfoWindow.open(map);
+    
+    google.maps.event.addListener(map, 'click', function(event) {
+        var marker = addMarker(event.latLng, map);
+        document.getElementById("map").style.display = "none";
+	 	document.getElementById("shadow").style.display = "none";
+        document.myform.lat.value = event.latLng.lat().toFixed(2);
+        document.myform.lng.value = event.latLng.lng().toFixed(2);
+      });
+  }
+		var TILE_SIZE = 256;
+		function addMarker(location, map) {
+       var marker = new google.maps.Marker({
+         position: location,
+         map: map
+       });
+       return marker;
+     }
+		function createInfoWindowContent(latLng, zoom) {
+	        var scale = 1 << zoom;
+
+	        var worldCoordinate = project(latLng);
+
+	        var pixelCoordinate = new google.maps.Point(
+	            Math.floor(worldCoordinate.x * scale),
+	            Math.floor(worldCoordinate.y * scale));
+
+	        var tileCoordinate = new google.maps.Point(
+	            Math.floor(worldCoordinate.x * scale / TILE_SIZE),
+	            Math.floor(worldCoordinate.y * scale / TILE_SIZE));
+
+	        return [
+	          'Chicago, IL',
+	          'LatLng: ' + latLng,
+	          'Zoom level: ' + zoom,
+	          'World Coordinate: ' + worldCoordinate,
+	          'Pixel Coordinate: ' + pixelCoordinate,
+	          'Tile Coordinate: ' + tileCoordinate
+	        ].join('<br>');
+	      }
+		function project(latLng) {
+	        var siny = Math.sin(latLng.lat() * Math.PI / 180);
+
+	        siny = Math.min(Math.max(siny, -0.9999), 0.9999);
+
+	        return new google.maps.Point(
+	                TILE_SIZE * (0.5 + latLng.lng() / 360),
+	                TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
+	      }
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBvMZojeC8Sg3TpMpzOI2kMLAosMnVqN0&callback=initMap">
+    </script>
 	</body>
 </html>

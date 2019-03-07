@@ -12,13 +12,60 @@ Response res = r.get(index);
 		<meta charset="ISO-8859-1">
 		<title><%=res.name%></title>
 		<script>
+		function showmap()
+   	 	{
+   	 		document.getElementById("map").style.display = "";
+   	 		document.getElementById("shadow").style.display = "";
+   	 	}
 			function show(index1,index2)
 			{
 				document.getElementById(index1).style.display = "";
 	  			document.getElementById(index2).style.display = "none";
+	  			if(index1==1)
+	      	  	{
+	      	  		document.getElementById("g").style.display = "";
+	      	  	}
+	      	  	else
+	      	  	{
+	      	  	document.getElementById("g").style.display = "none";
+	      	  	}
 			}
 		</script>
 		<style>
+		 	#map 
+			{
+				left:25%;
+				right:25%;
+				top:25%;
+				bottom:25%;
+				position:absolute;
+				margin-top:0%;
+				z-index: 3;
+				width:50%;
+      		  	height: 50%;
+      		} 
+      		#father{
+				position:absolute;
+				width:100%;
+				height:100%;
+			}
+			#shadow
+			{
+				background-color: rgba(0,0,0,0.7);
+				position:absolute;
+				z-index: 2;
+				width:100%;
+       		 	height: 100%;
+			}
+			#g
+        	{
+        		position:absolute;
+				width:30px;
+				height:30px;
+        		top:1%;
+        		right:22.5%;
+        		z-index:3;
+        	}	 
 			@font-face
 			{
 				font-family: Savoye;
@@ -50,7 +97,7 @@ Response res = r.get(index);
         		color:white;
         		right:0%;
         		text-align:left;
-        		z-index:100;
+        		z-index:2;
         	}
         	input[type=text] 
         	{
@@ -83,18 +130,23 @@ Response res = r.get(index);
         </style>
 	</head>
 	<body>
+	<div id="father">
+		<div id="shadow" style="display:none" ></div>
+		
 		<div id="bar">
 			<p> <a href="HomePage.jsp"> WeatherMeister </a> </p>
 		</div>
+		<div id="map" style="display:none"></div>
+		<div id="g" style="display:none"><input type="image" onclick="showmap()" src="MapIcon_.png" style="position:absolute;z-index:3" ></div>
 		<div id="searchway">
-			<form action="Display.jsp" method="GET">
+			<form name="myform" action="Display.jsp" method="GET">
 				<div id ="0">
 					<input style="width:50%" type="text" name="cityname" value="Los Angeles">
 					<input type="image" src="magnifying_glass.jpeg" width="25px" height="25px" style="position:relative;right:5%;"> 
 				</div>
 				<div id ="1" style="display:none">
 					<input style="width:25%" type="text" name="lat" value="Latitude">
-					<input style="width:25%" type="text" name="long" value="Longitude">
+					<input style="width:25%" type="text" name="lng" value="Longitude">
 					<input type="image" src="magnifying_glass.jpeg" width="25px" height="25px" style="position:relative;right:5%;">  
 				</div>
 				<div id="radiobuttons">
@@ -164,5 +216,71 @@ Response res = r.get(index);
 				<font style="color:white;font-size:40px;">Sunrise/set</font>
 			</div>
 		</div>
+		</div>
+		<script>
+function initMap() {
+    var chicago = new google.maps.LatLng(41.850, -87.650);
+ 
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: chicago,
+      zoom: 3
+    });
+    
+    var coordInfoWindow = new google.maps.InfoWindow();
+    coordInfoWindow.setContent(createInfoWindowContent(chicago, map.getZoom()));
+    coordInfoWindow.setPosition(chicago);
+    coordInfoWindow.open(map);
+    
+    google.maps.event.addListener(map, 'click', function(event) {
+        var marker = addMarker(event.latLng, map);
+        document.getElementById("map").style.display = "none";
+	 	document.getElementById("shadow").style.display = "none";
+        document.myform.lat.value = event.latLng.lat().toFixed(2);
+        document.myform.lng.value = event.latLng.lng().toFixed(2);
+      });
+  }
+		var TILE_SIZE = 256;
+		function addMarker(location, map) {
+       var marker = new google.maps.Marker({
+         position: location,
+         map: map
+       });
+       return marker;
+     }
+		function createInfoWindowContent(latLng, zoom) {
+	        var scale = 1 << zoom;
+
+	        var worldCoordinate = project(latLng);
+
+	        var pixelCoordinate = new google.maps.Point(
+	            Math.floor(worldCoordinate.x * scale),
+	            Math.floor(worldCoordinate.y * scale));
+
+	        var tileCoordinate = new google.maps.Point(
+	            Math.floor(worldCoordinate.x * scale / TILE_SIZE),
+	            Math.floor(worldCoordinate.y * scale / TILE_SIZE));
+
+	        return [
+	          'Chicago, IL',
+	          'LatLng: ' + latLng,
+	          'Zoom level: ' + zoom,
+	          'World Coordinate: ' + worldCoordinate,
+	          'Pixel Coordinate: ' + pixelCoordinate,
+	          'Tile Coordinate: ' + tileCoordinate
+	        ].join('<br>');
+	      }
+		function project(latLng) {
+	        var siny = Math.sin(latLng.lat() * Math.PI / 180);
+
+	        siny = Math.min(Math.max(siny, -0.9999), 0.9999);
+
+	        return new google.maps.Point(
+	                TILE_SIZE * (0.5 + latLng.lng() / 360),
+	                TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
+	      }
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBvMZojeC8Sg3TpMpzOI2kMLAosMnVqN0&callback=initMap">
+    </script>
 	</body>
 </html>
