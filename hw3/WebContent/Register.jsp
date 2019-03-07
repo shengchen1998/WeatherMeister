@@ -87,6 +87,9 @@
 			<div id="r"><a href="Register.jsp" style="position:absolute;top:25%;right:5%;">Register</a></div>
 		</div>
 		<div id="window">
+			<div id="logo" style="position:absolute;height:25%;top:0%;width:30%;left:35%;right:35%">
+				<img src="new-account-icon-256x256.png" style="position:absolute;height:100%;width:100%">
+			</div>
 			<div id="form"style="position:absolute;height:80%;top:20%;bottom:0%;width:100%;">
 				<form name="myform" action="HomePage.jsp" method="POST" onsubmit="return validate();">
 				<h1  style="color:white;">Username</h1>
@@ -98,7 +101,7 @@
 				<h1  style="color:white;">Confirm Password</h1>
 				<input style="position:absolute;left:5%;right:5%;width:90%;font-size:25px;" type="text" name="confirmpassword" value="">
 				<br>
-				<div id="formerror" style="color: white;position:absolute;height:10%;width:80%;left:10%;right:10%;bottom:10%;"></div>
+				<div id="formerror" style="color: white;position:absolute;height:10%;width:80%;left:10%;right:10%;bottom:10%;text-align:center;"></div>
 				<input type="submit" style="background-color:rgb(255, 153, 0);
   				color: white;position:absolute;height:10%;width:20%;left:40%;right:40%;bottom:5%;" value="Register">
 				</form>
