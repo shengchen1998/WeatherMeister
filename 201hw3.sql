@@ -12,7 +12,7 @@ CREATE TABLE users
 CREATE TABLE histories
 (
 	id INT(11) PRIMARY KEY AUTO_INCREMENT,
-    userID INT(11) NOT NULL,
+    username INT(11) NOT NULL,
     input VARCHAR(50) NOT NULL,
-    FOREIGN KEY(userID) REFERENCES users(userID)
+    FOREIGN KEY(username) REFERENCES users(username)
 );

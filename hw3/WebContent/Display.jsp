@@ -6,6 +6,7 @@
     import="java.io.IOException,java.io.InputStream,java.io.InputStreamReader"
     import="java.io.UnsupportedEncodingException,java.net.HttpURLConnection,java.net.URL"
     import="com.google.gson.Gson,com.google.gson.GsonBuilder,com.google.gson.stream.JsonReader"
+    import="java.sql.Connection,java.sql.DriverManager,java.sql.PreparedStatement,java.sql.ResultSet,java.sql.SQLException"
 %>
 <!DOCTYPE html>
 <%
@@ -15,9 +16,29 @@ ArrayList<City> c = (ArrayList<City>)session.getAttribute("cityList");
 ArrayList<Response> result = new ArrayList<Response>();
 if(searchWay.equals("name"))
 {
-	String cityName = request.getParameter("cityname").trim();
+	String cityName = request.getParameter("cityname");
+	if(cityName == null)
+	{
+		cityName = "";
+	}
+	cityName = cityName.trim();
 	if(cityName.length()!=0)
 	{
+		String username = (String)session.getAttribute("currentUser");
+		if((String)session.getAttribute("currentUser")==null||((String)session.getAttribute("currentUser")).trim().length()==0)
+		{
+			Connection conn = null;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			try
+			{
+				Class.forName("com.mysql.jdbc.Driver");
+				conn = DriverManager.getConnection("jdbc:mysql://localhost/userData?user=root&password=root&useSSL=false");
+				String username = (String)session.getAttribute("currentUser");
+				ps = conn.prepareStatement("INSERT INTO users (username, pw) VALUES (?, ?)");
+			}
+		}
+		
 		for(int i = 0;i<c.size();++i)
 		{
 			if(c.get(i).name.toLowerCase().equals(cityName.toLowerCase()))
