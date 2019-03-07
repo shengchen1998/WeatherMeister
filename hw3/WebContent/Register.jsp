@@ -11,13 +11,14 @@
 	          	var xhttp = new XMLHttpRequest();
 	          	xhttp.open("GET", "Register?username=" + document.myform.username.value + "&password=" + document.myform.password.value
 	          		+ "&confirmpassword=" + document.myform.confirmpassword.value, false);
-	          xhttp.send();
-	    	  if (xhttp.responseText.trim().length > 0) {
-	            document.getElementById("formerror").innerHTML = xhttp.responseText;
-	            return false;
-	          }
-	          return true;
-	      }
+	          	xhttp.send();
+	    	  	if (xhttp.responseText.trim().length > 0)
+	    	  	{
+	            	document.getElementById("formerror").innerHTML = xhttp.responseText;
+	            	return false;
+	          	}
+	          	return true;
+	      	}
 
 		</script>
 		<style>

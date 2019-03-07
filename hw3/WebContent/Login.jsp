@@ -6,6 +6,18 @@
 		<meta charset="ISO-8859-1">
 		<title>Login</title>
 		<script>
+		function validate()
+		{
+          	var xhttp = new XMLHttpRequest();
+          	xhttp.open("GET", "Login?username=" + document.myform.username.value + "&password=" + document.myform.password.value, false);
+          	xhttp.send();
+    	  	if (xhttp.responseText.trim().length > 0)
+    	  	{
+            	document.getElementById("formerror").innerHTML = xhttp.responseText;
+            	return false;
+          	}
+          	return true;
+      	}
 		</script>
 		<style>
 			@font-face
@@ -86,7 +98,7 @@
 		</div>
 		<div id="window">
 			<div id="form"style="position:absolute;height:80%;top:20%;bottom:0%;width:100%;">
-				<form name="myform" action="" method="GET">
+				<form name="myform" action="HomePage.jsp" method="POST" onsubmit="return validate();">
 				<h1  style="color:white;">Username</h1>
 				<br>
 				<input style="position:absolute;left:5%;right:5%;width:90%;font-size:25px;" type="text" name="username" value="">
@@ -95,6 +107,7 @@
 				<br>
 				<input style="position:absolute;left:5%;right:5%;width:90%;font-size:25px;" type="text" name="password" value="">
 				<br>
+				<div id="formerror" style="color: white;position:absolute;height:10%;width:80%;left:10%;right:10%;bottom:10%;"></div>
 				<input type="submit" style="background-color:rgb(255, 153, 0);
   				color: white;position:absolute;height:10%;width:20%;left:40%;right:40%;bottom:5%;" value="Login">
 				</form>

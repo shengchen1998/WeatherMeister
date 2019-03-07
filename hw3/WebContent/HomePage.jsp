@@ -165,11 +165,11 @@
 <div id="bar">
 	<div id="wm"><p> <a href="HomePage.jsp"> WeatherMeister </a> </p></div>
 	<%if((String)session.getAttribute("currentUser")==null||((String)session.getAttribute("currentUser")).trim().length()==0){ %>
-	<div id="l"><a href="Login.jsp" style="position:absolute;top:25%;right:15%;">Login</a></div>
-	<div id="r"><a href="Register.jsp" style="position:absolute;top:25%;right:5%;">Register</a></div>
+	<div><a href="Login.jsp" style="position:absolute;top:25%;right:15%;">Login</a></div>
+	<div><a href="Register.jsp" style="position:absolute;top:25%;right:5%;">Register</a></div>
 	<%}else{ %>
-	<div id="l"><a href="Login.jsp" style="position:absolute;top:25%;right:15%;">Profile</a></div>
-	<div id="r"><a href="HomePage.jsp" style="position:absolute;top:25%;right:5%;" onclick="signOut()">Sign Out</a></div>
+	<div><a href="Profile.jsp" style="position:absolute;top:25%;right:15%;">Profile</a></div>
+	<div><a href="HomePage.jsp" style="position:absolute;top:25%;right:5%;" onclick="signOut()">Sign Out</a></div>
 	<%} %>
 </div>
 <div id= "logo" style="top:20%;width:100%;height:40%;text-align:center;">
