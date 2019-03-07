@@ -172,8 +172,8 @@
 	<div><a href="HomePage.jsp" style="position:absolute;top:25%;right:5%;" onclick="signOut()">Sign Out</a></div>
 	<%} %>
 </div>
-<div id= "logo" style="top:20%;width:100%;height:40%;text-align:center;">
-	<img src="logo.png" style="width:30%;height:100%;">
+<div id= "logo" style="position:absolute;left:35%;right:35%;top:20%;width:30%;height:40%;">
+	<img src="logo.png" style="position:absolute;width:100%;padding-bottom:80%;">
 </div>
 <div id="map" style="display:none"></div>
 <div id="g" style="display:none"><input type="image" onclick="showmap()" src="MapIcon_.png" style="position:absolute;z-index:2" ></div>

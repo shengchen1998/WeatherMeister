@@ -87,7 +87,7 @@
 		</div>
 		<div id="window">
 			<div id="logo" style="position:absolute;height:25%;top:0%;width:30%;left:35%;right:35%">
-				<img src="Keychain_Locked@2x.png" style="position:absolute;height:100%;width:100%">
+				<img src="Keychain_Locked@2x.png" style="position:absolute;padding-bottom:100%;width:100%">
 			</div>
 			<div id="form"style="position:absolute;height:80%;top:20%;bottom:0%;width:100%;">
 				<form name="myform" action="HomePage.jsp" method="POST" onsubmit="return validate();">
