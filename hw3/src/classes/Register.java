@@ -8,12 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Register
@@ -83,11 +83,9 @@ public class Register extends HttpServlet
 			ps.setString(1, username);
 			ps.setString(2, pw1);
 			ps.executeUpdate();
-			/*
-			 * RequestDispatcher dispatch =
-			 * getServletContext().getRequestDispatcher("/HomePage.jsp?username="+username);
-			 * dispatch.forward(request, response);
-			 */
+			HttpSession session = request.getSession();
+			session.setAttribute("currentUser", username);
+			session.setMaxInactiveInterval(3600);
 		} catch (SQLException sqle)
 		{
 			System.out.println(sqle.getMessage());

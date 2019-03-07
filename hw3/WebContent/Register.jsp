@@ -99,7 +99,7 @@
 		</div>
 		<div id="window">
 			<div id="form"style="position:absolute;height:80%;top:20%;bottom:0%;width:100%;">
-				<form name="myform" action="HomePage.jsp" method="GET" onsubmit="return validate();">
+				<form name="myform" action="HomePage.jsp" method="POST" onsubmit="return validate();">
 				<h1  style="color:white;">Username</h1>
 				<input style="position:absolute;left:5%;right:5%;width:90%;font-size:25px;" type="text" name="username" value="">
 				<br>

@@ -14,6 +14,12 @@
 		xhttp.send();
 		
 	}
+	function signOut()
+	{
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("GET","SignOut",true);
+		xhttp.send();
+	}
    	 	function show(index1,index2)
    	 	{
    	 		document.getElementById(index1).style.display = "";
@@ -158,12 +164,12 @@
 <div id="shadow" style="display:none" ></div>
 <div id="bar">
 	<div id="wm"><p> <a href="HomePage.jsp"> WeatherMeister </a> </p></div>
-	<%if(request.getParameter("username")==null||request.getParameter("username").trim().length()==0){ %>
+	<%if((String)session.getAttribute("currentUser")==null||((String)session.getAttribute("currentUser")).trim().length()==0){ %>
 	<div id="l"><a href="Login.jsp" style="position:absolute;top:25%;right:15%;">Login</a></div>
 	<div id="r"><a href="Register.jsp" style="position:absolute;top:25%;right:5%;">Register</a></div>
 	<%}else{ %>
 	<div id="l"><a href="Login.jsp" style="position:absolute;top:25%;right:15%;">Profile</a></div>
-	<div id="r"><a href="Register.jsp" style="position:absolute;top:25%;right:5%;">Sign Out</a></div>
+	<div id="r"><a href="HomePage.jsp" style="position:absolute;top:25%;right:5%;" onclick="signOut()">Sign Out</a></div>
 	<%} %>
 </div>
 <div id= "logo" style="top:20%;width:100%;height:40%;text-align:center;">
